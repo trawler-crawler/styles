@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never" default-locale="en-GB">
+  <info>
+    <title>Journal of Insects as Food and Feed</title>
+    <title-short>JIFF</title-short>
+    <id>http://www.zotero.org/styles/journal-of-insects-as-food-and-feed</id>
+    <link href="http://www.zotero.org/styles/journal-of-insects-as-food-and-feed" rel="self"/>
+    <link href="http://www.zotero.org/styles/world-mycotoxin-journal" rel="template"/>
+    <link href="https://brill.com/fileasset/downloads_products/Author_Instructions/JIFF.pdf" rel="documentation"/>
+    <author>
+      <name>Matthias Salomon</name>
+    </author>
+    <category citation-format="author-date"/>
+    <category field="biology"/>
+    <issn>2352-4588</issn>
+    <summary>Author-date style for Journal of Insects as Food and Feed (Wageningen Academic / Brill). All authors listed; full journal titles; DOI as https://doi.org/...</summary>
+    <updated>2026-10-16T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+
+  <!-- Author names in bibliography: Last, A.B., Last2, C.D. and Last3, E.F. -->
+  <macro name="author">
+    <names variable="author">
+      <name name-as-sort-order="all" sort-separator=", " and="text" initialize-with="." delimiter=", " delimiter-precedes-last="never"/>
+      <label form="short" prefix=" (" suffix=")"/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <!-- Short form for in-text citations -->
+  <macro name="author-short">
+    <names variable="author">
+      <name form="short" and="text" delimiter=", " initialize-with=". "/>
+      <et-al font-style="italic"/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <!-- Editors for chapters / proceedings -->
+  <macro name="container-contributors">
+    <choose>
+      <if type="chapter paper-conference" match="any">
+        <text term="in" text-case="capitalize-first" suffix=": "/>
+        <names variable="editor translator" delimiter=", ">
+          <name initialize-with="." and="text" delimiter=", " sort-separator=", " name-as-sort-order="all" delimiter-precedes-last="never"/>
+          <label form="short" prefix=" (" suffix=")"/>
+        </names>
+      </if>
+    </choose>
+  </macro>
+
+  <!-- Title -->
+  <macro name="title">
+    <choose>
+      <if type="chapter paper-conference" match="any">
+        <text variable="title" suffix="."/>
+      </if>
+      <else>
+        <text variable="title" suffix="."/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Container title (journal / book) -->
+  <macro name="thecontainer">
+    <choose>
+      <if type="article-journal article-magazine article-newspaper" match="any">
+        <text variable="container-title"/>
+      </if>
+      <else>
+        <text variable="container-title" suffix="."/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Publisher + place -->
+  <macro name="publisher">
+    <choose>
+      <if type="thesis">
+        <group delimiter=", ">
+          <text variable="genre"/>
+          <text variable="publisher"/>
+          <text variable="publisher-place"/>
+        </group>
+      </if>
+      <else-if type="book chapter paper-conference report" match="any">
+        <group delimiter=", ">
+          <text variable="publisher"/>
+          <text variable="publisher-place"/>
+        </group>
+      </else-if>
+    </choose>
+  </macro>
+
+  <!-- Year -->
+  <macro name="year-date">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else-if variable="status">
+        <text variable="status"/>
+      </else-if>
+      <else>
+        <text term="no date" form="short"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Volume + pages for journals; pages for chapters; number of pages for books -->
+  <macro name="locators">
+    <choose>
+      <if type="article-journal article-magazine" match="any">
+        <group delimiter=": ">
+          <text variable="volume"/>
+          <text variable="page"/>
+        </group>
+      </if>
+      <else-if type="article-newspaper">
+        <date variable="issued" form="text"/>
+      </else-if>
+      <else-if type="book thesis report" match="any">
+        <text variable="number-of-pages" suffix=" pp"/>
+      </else-if>
+      <else-if type="chapter paper-conference" match="any">
+        <text variable="page" prefix=", pp. "/>
+      </else-if>
+      <else>
+        <text variable="page" prefix=", "/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- DOI or URL -->
+  <macro name="access">
+    <choose>
+      <if variable="DOI">
+        <text variable="DOI" prefix=" https://doi.org/"/>
+      </if>
+      <else-if variable="URL">
+        <group delimiter=". ">
+          <group delimiter=": ">
+            <text term="available at" text-case="capitalize-first"/>
+            <text variable="URL"/>
+          </group>
+          <group prefix="(" suffix=")" delimiter=" ">
+            <text term="accessed"/>
+            <date variable="accessed" form="text"/>
+          </group>
+        </group>
+      </else-if>
+    </choose>
+  </macro>
+
+  <!-- IN-TEXT CITATIONS -->
+  <citation et-al-min="3" et-al-use-first="1" disambiguate-add-year-suffix="true" collapse="year">
+    <sort>
+      <key macro="author-short"/>
+      <key macro="year-date"/>
+    </sort>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=", ">
+        <text macro="author-short"/>
+        <text macro="year-date"/>
+      </group>
+      <text variable="locator" prefix=": "/>
+    </layout>
+  </citation>
+
+  <!-- BIBLIOGRAPHY -->
+  <bibliography hanging-indent="true" et-al-min="99" et-al-use-first="99">
+    <sort>
+      <key macro="author"/>
+      <key macro="year-date"/>
+      <key variable="title"/>
+    </sort>
+    <layout suffix=".">
+      <group delimiter=" ">
+        <text macro="author" suffix=","/>
+        <text macro="year-date" suffix="."/>
+        <text macro="title"/>
+        <text macro="container-contributors"/>
+        <text macro="thecontainer"/>
+        <group delimiter=", ">
+          <text macro="publisher"/>
+          <text macro="locators"/>
+        </group>
+        <text macro="access"/>
+      </group>
+    </layout>
+  </bibliography>
+</style>
